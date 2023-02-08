@@ -8,6 +8,9 @@ void tableNumber();
 void admin();
 void mainscreen();
 void screenclear();
+void username_prompt();
+void password_prompt();
+void ask_prompt();
 void delay();
 void delay(int number_of_seconds)
 {
@@ -30,6 +33,53 @@ void timer()
     time_t t;
     time(&t);
     printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t Present Time: %s\n", ctime(&t));
+}
+
+void username_prompt() // Please note that first, call username_prompt then ask_prompt, ask_prompt will call password_prompt
+{
+    char username[10];
+    printf("\n\t\t\t\tPlease enter admin username: ");
+    scanf("%s", &username);
+    printf("\n\t\t\t\tYour username is %s.\n", username);
+}
+
+void password_prompt()
+{
+    char password[10];
+    char re_entered[10];
+    printf("\n\t\t\t\tPlease enter admin password: ");
+    scanf("%s", &password);
+    printf("\n\t\t\t\tPlease re-enter your password for verification: ");
+    scanf("%s", &re_entered);
+    if (strcmp(password, re_entered) == 0)
+    {
+        printf("\n\t\t\t\tYour password is %s.\n", password);
+        printf("\n\t\t\t\tPlease keep note of your password i.e %s\n\n", password);
+    }
+    else
+    {
+        printf("\n\t\t\t\tSorry, one of your password doesn't match.\n\n");
+        password_prompt();
+    }
+}
+
+void ask_prompt()
+{
+    char character[4];
+    printf("\n\t\t\t\tAre you sure you want to proceed?\n");
+    printf("\n\t\t\t\tType 'YES' or 'yes' to proceed and 'NO' or 'no' to add new one : ");
+    scanf("%s", &character);
+    if (strcmp(character, "yes") == 0 || strcmp(character, "YES") == 0)
+    {
+        screenclear();
+        password_prompt();
+    }
+    else
+    {
+        screenclear();
+        username_prompt();
+        ask_prompt();
+    }
 }
 
 void authentication()
@@ -247,7 +297,9 @@ void mainscreen()
 
 int main()
 {
-    mainscreen();
+    // mainscreen();
+    username_prompt();
+    ask_prompt();
     // authentication();
     // admin();
     // customer();

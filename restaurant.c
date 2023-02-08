@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <direct.h>
+void reviews();
+void tableNumber();
 void admin();
 void mainscreen();
 void screenclear();
@@ -47,7 +49,7 @@ void authentication()
     else
     {
         screenclear();
-        printf("\n\n\n\n\n\n\n\n\t\t\t\t||\t\t\t You are authenticated.\t\t\t||\n\n"); // I want to show this message.
+        printf("\n\n\n\n\n\n\n\n\t\t\t\t||\t\t\t You are authenticated.\t\t\t||"); // I want to show this message.
         int i;
         for (i = 3; i > 0; i--)
         {
@@ -62,10 +64,58 @@ void authentication()
     }
 }
 
+void reaction()
+{
+    printf("\n\n\t1. Excellent \n\n\t2. Good \n\n\t3. Average \n\n\t4. Dissatisfied\n\n\t->\t");
+}
+
+void reviews()
+{
+    int first, second, third, fourth, fifth, sixth, seventh;
+    printf("\n\n\t\t\t\tFood Quality: ");
+    reaction();
+    scanf("%d", &first);
+    printf("\n\t\t\t\tOverall Service Quality: ");
+    reaction();
+    scanf("%d", &second);
+
+    printf("\n\t\t\t\tCleanliness: ");
+    reaction();
+    scanf("%d", &third);
+    printf("\n\t\t\t\tOrder Accuracy: ");
+    reaction();
+    scanf("%d", &fourth);
+
+    printf("\n\t\t\t\tSpeed of Service: ");
+    reaction();
+    scanf("%d", &fifth);
+    printf("\n\t\t\t\tValue: ");
+    reaction();
+    scanf("%d", &sixth);
+    printf("\n\t\t\t\tOverall Experience: ");
+    reaction();
+    scanf("%d", &seventh);
+    char words[500];
+    printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
+    scanf("%s", &words); // string is taken but not with spaces.
+    // scanf("%[^\n]",words);
+    // gets(words);
+    // printf("Your review: "); // Even this is also not working.
+    // puts(words);
+    printf("Your review: %s", words); // remove this after fixing the issue.
+}
+
+void tableNumber()
+{
+    int tableno;
+    printf("\t\t\t\t\t\t\tEnter your table no: ");
+    scanf("%d", &tableno);
+    printf("\t\t\t\t\t\t\tYour table no. is %d.\n\n", tableno);
+}
+
 void admin()
 {
     timer();
-    // printf("\n\n\t\t\t\t\t||\t\t You are authenticated.\t\t\t||\n\n");
     int choice;
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
     printf("\n\t\t\t\t\t                      ADMIN SECTION \n");
@@ -125,7 +175,9 @@ void customer()
         printf("Displaying the order.");
         break;
     case 2:
-        printf("Place your order.");
+        // printf("Place your order.");
+        tableNumber();
+        printf("\t\t\t\t\t\t\tThank you for the order.\n\n");
         break;
     case 3:
         printf("Remove an item from the order.");
@@ -134,7 +186,8 @@ void customer()
         printf("Display final bill.");
         break;
     case 5:
-        printf("Reviews for improvement.");
+        // printf("Reviews for improvement.");
+        reviews();
         break;
     case 6:
         mainscreen();
@@ -162,9 +215,6 @@ void mainscreen()
     printf("\t\t\t\t\t      Created and Designed by Uttam and Pratik\n\n\n");
     printf("\t\t\t\t\t\t\tEnter Your Preference : ");
     scanf("%d", &choice);
-    // if (choice == %d){
-    //     // Then only proceed the program else stop it saying you entered character.
-    // }
     printf("\n\n");
     if (choice == 3)
     {
@@ -188,6 +238,7 @@ void mainscreen()
         // {
         //     printf("Please enter a number not a character.");
         // }
+        screenclear();
         printf("\t\t\t\t\t\t\tPlease enter a valid number 1, 2 or 3.\n\n");
         mainscreen();
         break;

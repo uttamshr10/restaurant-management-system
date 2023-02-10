@@ -297,9 +297,9 @@ void mainscreen()
 
 int main()
 {
-    // mainscreen();
     username_prompt();
     ask_prompt();
+    mainscreen();
     // authentication();
     // admin();
     // customer();

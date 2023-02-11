@@ -3,9 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <direct.h>
+char user[10], pass[10];
 void reviews();
 void tableNumber();
 void admin();
+void customer();
 void mainscreen();
 void screenclear();
 void username_prompt();
@@ -39,22 +41,21 @@ void username_prompt() // Please note that first, call username_prompt then ask_
 {
     char username[10];
     printf("\n\t\t\t\tPlease enter admin username: ");
-    scanf("%s", &username);
-    printf("\n\t\t\t\tYour username is %s.\n", username);
+    scanf("%s", &user);
+    printf("\n\t\t\t\tYour username is %s.\n", user);
 }
 
 void password_prompt()
 {
-    char password[10];
     char re_entered[10];
     printf("\n\t\t\t\tPlease enter admin password: ");
-    scanf("%s", &password);
+    scanf("%s", &pass);
     printf("\n\t\t\t\tPlease re-enter your password for verification: ");
     scanf("%s", &re_entered);
-    if (strcmp(password, re_entered) == 0)
+    if (strcmp(pass, re_entered) == 0)
     {
-        printf("\n\t\t\t\tYour password is %s.\n", password);
-        printf("\n\t\t\t\tPlease keep note of your password i.e %s\n\n", password);
+        printf("\n\t\t\t\tYour password is %s.\n", pass);
+        printf("\n\t\t\t\tPlease keep note of your password i.e %s\n\n", pass);
     }
     else
     {
@@ -84,19 +85,24 @@ void ask_prompt()
 
 void authentication()
 {
-    char username[10] = "Uttam";
-    char password[10] = "Pratik";
+    char username[10];
+    char password[10];
     printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
     scanf("%s", &username);
-    printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");
-    scanf("%s", &password);
-    if (strcmp(username, "Uttam") != 0 || strcmp(password, "Pratik") != 0)
+    if (strcmp(username, user) == 0)
     {
-        system("cls");
-        printf("\n\n\t\t\t\t**\t\t\t Please enter the correct credentials.\t\t\t**\n\n\n"); // Just two new line
-        authentication();
+        printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");
+        scanf("%s", &password);
     }
-    else
+
+    while (strcmp(password, pass) != 0)
+    {
+        printf("\n\n\t\t\t\t**\t\t\t Please enter the correct credentials.\t\t\t**\n\n\n"); // Just two new line
+        // authentication();
+        printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");
+        scanf("%s", &password);
+    }
+    if (strcmp(password, pass) == 0)
     {
         screenclear();
         printf("\n\n\n\n\n\n\n\n\t\t\t\t||\t\t\t You are authenticated.\t\t\t||"); // I want to show this message.
@@ -153,6 +159,7 @@ void reviews()
     // printf("Your review: "); // Even this is also not working.
     // puts(words);
     printf("Your review: %s", words); // remove this after fixing the issue.
+    customer();
 }
 
 void tableNumber()

@@ -89,6 +89,12 @@ void authentication()
     char password[10];
     printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
     scanf("%s", &username);
+    while (strcmp(username, user) != 0)
+    {
+        screenclear();
+        printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
+        scanf("%s", &username);
+    }
     if (strcmp(username, user) == 0)
     {
         printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");

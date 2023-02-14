@@ -3,8 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <direct.h>
+int stringlength;
 char user[10], pass[10];
 void reviews();
+void alreadySetLoginDetails();
+void alreadySetLoginwithDetails();
 void tableNumber();
 void admin();
 void customer();
@@ -40,22 +43,22 @@ void timer()
 void username_prompt() // Please note that first, call username_prompt then ask_prompt, ask_prompt will call password_prompt
 {
     char username[10];
-    printf("\n\t\t\t\tPlease enter admin username: ");
+    printf("\n\t\t\t\t\t\t\tPlease enter admin username: ");
     scanf("%s", &user);
-    printf("\n\t\t\t\tYour username is %s.\n", user);
+    printf("\n\t\t\t\t\t\t\tYour username is %s.\n", user);
 }
 
 void password_prompt()
 {
     char re_entered[10];
-    printf("\n\t\t\t\tPlease enter admin password: ");
+    printf("\n\t\t\t\t\t\t\tPlease enter admin password: ");
     scanf("%s", &pass);
-    printf("\n\t\t\t\tPlease re-enter your password for verification: ");
+    printf("\n\t\t\t\t\t\t\tPlease re-enter your password for verification: ");
     scanf("%s", &re_entered);
     if (strcmp(pass, re_entered) == 0)
     {
-        printf("\n\t\t\t\tYour password is %s.\n", pass);
-        printf("\n\t\t\t\tPlease keep note of your password i.e %s\n\n", pass);
+        printf("\n\t\t\t\t\t\t\tYour password is %s.\n", pass);
+        printf("\n\t\t\t\t\t\t\tPlease keep note of your password i.e %s\n\n", pass);
     }
     else
     {
@@ -122,13 +125,65 @@ void authentication()
         }
         delay(1.5);
         screenclear();
-        admin();
     }
 }
 
 void reaction()
 {
     printf("\n\n\t1. Excellent \n\n\t2. Good \n\n\t3. Average \n\n\t4. Dissatisfied\n\n\t->\t");
+}
+
+void renew_password()
+{
+    char username[10];
+    stringlength = strlen(user);
+    if (stringlength == 0)
+    {
+        printf("\t\t\t\t\t\t\tPlease first add username and password.\n\n");
+        username_prompt();
+        ask_prompt();
+    }
+    else
+    {
+        alreadySetLoginDetails();
+    }
+}
+
+void alreadySetLoginDetails()
+{
+    char username[10];
+    printf("\n\n\t\t\t\t||\t\t\t Enter your username for verification:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
+    scanf("%s", &username);
+    if (strcmp(username, user) != 0)
+    {
+        screenclear();
+        printf("\n\n\t\t\t\t\t\t\tIncorrect username, Please enter again \n\n");
+        printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
+        scanf("%s", &username);
+    }
+    else if (strcmp(username, user) == 0)
+    {
+        password_prompt();
+    }
+}
+
+void alreadySetLoginwithDetails()
+{
+    char username[10];
+    printf("\n\n\t\t\t\t||\t\t\t Enter your username for verification:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
+    scanf("%s", &username);
+    if (strcmp(username, user) != 0)
+    {
+        screenclear();
+        printf("\n\n\t\t\t\t\t\t\tIncorrect username, Please enter again \n\n");
+        printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
+        scanf("%s", &username);
+    }
+    else if (strcmp(username, user) == 0)
+    {
+        printf("\n\t\t\t\t\t\t\tYour password is %s", pass);
+        printf("\n\t\t\t\t\t\t\tPlease note your password: %s", pass);
+    }
 }
 
 void reviews()
@@ -140,14 +195,12 @@ void reviews()
     printf("\n\t\t\t\tOverall Service Quality: ");
     reaction();
     scanf("%d", &second);
-
     printf("\n\t\t\t\tCleanliness: ");
     reaction();
     scanf("%d", &third);
     printf("\n\t\t\t\tOrder Accuracy: ");
     reaction();
     scanf("%d", &fourth);
-
     printf("\n\t\t\t\tSpeed of Service: ");
     reaction();
     scanf("%d", &fifth);
@@ -157,14 +210,10 @@ void reviews()
     printf("\n\t\t\t\tOverall Experience: ");
     reaction();
     scanf("%d", &seventh);
-    char words[500];
+    char words[200];
     printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
-    scanf("%s", &words); // string is taken but not with spaces.
-    // scanf("%[^\n]",words);
-    // gets(words);
-    // printf("Your review: "); // Even this is also not working.
-    // puts(words);
-    printf("Your review: %s", words); // remove this after fixing the issue.
+    scanf("%s", &words);
+    printf("Great %s", words);
     customer();
 }
 
@@ -183,11 +232,74 @@ void admin()
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
     printf("\n\t\t\t\t\t                      ADMIN SECTION \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
+    printf("\t\t\t\t\t\t\t1. Set username and password. \n"); // this is to let admin know which items are in stock.
+    printf("\t\t\t\t\t\t\t2. Forgot password? \n");
+    printf("\t\t\t\t\t\t\t3. View total sales. \n");
+    printf("\t\t\t\t\t\t\t4. Go Back to Main Screen \n\n\n");
+    printf("\t\t\t\t\t\t\tEnter Your Preference : ");
+    scanf("%d", &choice);
+    printf("\n\n");
+    switch (choice)
+    {
+    case 1:
+        // printf("Set username and password.");
+        screenclear();
+        stringlength = strlen(user);
+        if (stringlength == 0)
+        {
+            username_prompt();
+            ask_prompt();
+        }
+        else
+        {
+            printf("\n\n\t\t\t\t\t\t\tUsername and Password is already set");
+            printf("\n\n\t\t\t\t\t\t\tTo know your login details:\n");
+            alreadySetLoginwithDetails();
+        }
+        admin();
+        break;
+    case 2:
+        screenclear();
+        renew_password();
+        admin();
+        break;
+    case 3:
+        stringlength = strlen(user);
+        if (stringlength == 0)
+        {
+            screenclear();
+            printf("\t\t\t\t\t\t\tPlease first add username and password.\n\n");
+            username_prompt();
+            ask_prompt();
+            admin();
+        }
+        else
+        {
+            authentication();
+            printf("\t\t\t\t\t\t\tView total sales.\n\n");
+        }
+        break;
+    case 4:
+        mainscreen();
+        break;
+    default:
+        printf("\t\t\t\t\t\t\tPlease enter a valid number.\n\n");
+        admin();
+        break;
+    }
+}
+
+void waiter()
+{
+    timer();
+    int choice;
+    printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
+    printf("\n\t\t\t\t\t                      WAITER SECTION \n");
+    printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
     printf("\t\t\t\t\t\t\t1. Display order menu. \n"); // this is to let admin know which items are in stock.
     printf("\t\t\t\t\t\t\t2. Add new items in the order. \n");
     printf("\t\t\t\t\t\t\t3. Remove items from the order. \n");
-    printf("\t\t\t\t\t\t\t4. View total sales. \n");
-    printf("\t\t\t\t\t\t\t5. Go Back to Main Screen \n\n\n");
+    printf("\t\t\t\t\t\t\t4. Go Back to Main Screen \n\n\n");
     printf("\t\t\t\t\t\t\tEnter Your Preference : ");
     scanf("%d", &choice);
     printf("\n\n");
@@ -203,9 +315,6 @@ void admin()
         printf("Remove items from the order.");
         break;
     case 4:
-        printf("View total sales.");
-        break;
-    case 5:
         mainscreen();
         break;
     default:
@@ -271,36 +380,34 @@ void mainscreen()
     printf("\n\t\t\t\t\t        WELCOME TO RESTAURANT MANAGEMENT SYSTEM \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
     printf("\t\t\t\t\t\t\t1. ADMIN SECTION \n");
-    printf("\t\t\t\t\t\t\t2. CUSTOMER SECTION \n");
-    printf("\t\t\t\t\t\t\t3. Exit \n\n\n");
+    printf("\t\t\t\t\t\t\t2. WAITER SECTION \n");
+    printf("\t\t\t\t\t\t\t3. CUSTOMER SECTION \n");
+    printf("\t\t\t\t\t\t\t4. Exit \n\n\n");
 
     printf("\t\t\t\t\t\"TAKE A TASTE. COME JOIN US, LIFE IS SO ENDLESSLY DELICIOUS.\"\n\n\n");
     printf("\t\t\t\t\t      Created and Designed by Uttam and Pratik\n\n\n");
     printf("\t\t\t\t\t\t\tEnter Your Preference : ");
     scanf("%d", &choice);
     printf("\n\n");
-    if (choice == 3)
+    if (choice == 4)
     {
         printf("\t\t\t\t\t\t\t Thank you for checking us.\n\n\n\n");
     }
     switch (choice)
     {
     case 1:
-        authentication();
-        // admin();
-        // printf("\t\t\t\t\t\t\t Welcome to admin panel.\n\n");
+        // authentication();
+        admin();
         break;
     case 2:
-        customer();
-        // printf("\t\t\t\t\t\t\t Welcome to customer panel.\n\n");
+        waiter();
         break;
     case 3:
+        customer();
+        break;
+    case 4:
         break;
     default:
-        // if (choice == % c || choice == % s) // Why can't we compare like this??
-        // {
-        //     printf("Please enter a number not a character.");
-        // }
         screenclear();
         printf("\t\t\t\t\t\t\tPlease enter a valid number 1, 2 or 3.\n\n");
         mainscreen();
@@ -310,8 +417,6 @@ void mainscreen()
 
 int main()
 {
-    username_prompt();
-    ask_prompt();
     mainscreen();
     // authentication();
     // admin();

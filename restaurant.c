@@ -1,22 +1,23 @@
 #include <stdio.h>
-#include <time.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
 #include <direct.h>
-int stringlength;
-char user[10], pass[10];
-void reviews();
-void alreadySetLoginDetails();
-void alreadySetLoginwithDetails();
-void tableNumber();
-void admin();
-void customer();
 void mainscreen();
-void screenclear();
-void username_prompt();
-void password_prompt();
-void ask_prompt();
-void delay();
+void customer();
+void alreadySetLoginDetails();
+int i, stringlength;
+char user[10], pass[10];
+void screenclear()
+{
+    system("cls");
+}
+void timer()
+{
+    time_t t;
+    time(&t);
+    printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t Present Time: %s\n", ctime(&t));
+}
 void delay(int number_of_seconds)
 {
     // Converting time into milli_seconds
@@ -29,17 +30,18 @@ void delay(int number_of_seconds)
     while (clock() < start_time + milli_seconds)
         ;
 }
-void screenclear()
+struct node
 {
-    system("cls");
-}
-void timer()
-{
-    time_t t;
-    time(&t);
-    printf("\n\t\t\t\t\t\t\t\t\t\t\t\t\t Present Time: %s\n", ctime(&t));
-}
-
+    char foodname[50];
+    int quantity;
+    float price;
+    int data;
+    struct node *prev;
+    struct node *next;
+};
+struct node *headc = NULL, *newnode, *tailc = NULL;
+struct node *heada = NULL, *taila = NULL;
+struct node *head_s;
 void username_prompt() // Please note that first, call username_prompt then ask_prompt, ask_prompt will call password_prompt
 {
     char username[10];
@@ -160,6 +162,7 @@ void alreadySetLoginDetails()
         printf("\n\n\t\t\t\t\t\t\tIncorrect username, Please enter again \n\n");
         printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
         scanf("%s", &username);
+        // there's a meme it's not a bug, it's a feature works here. haha
     }
     else if (strcmp(username, user) == 0)
     {
@@ -186,49 +189,262 @@ void alreadySetLoginwithDetails()
     }
 }
 
-void reviews()
+struct node *createadmin(struct node *head, int data, char foodname[25], float price)
 {
-    int first, second, third, fourth, fifth, sixth, seventh;
-    printf("\n\n\t\t\t\tFood Quality: ");
-    reaction();
-    scanf("%d", &first);
-    printf("\n\t\t\t\tOverall Service Quality: ");
-    reaction();
-    scanf("%d", &second);
-    printf("\n\t\t\t\tCleanliness: ");
-    reaction();
-    scanf("%d", &third);
-    printf("\n\t\t\t\tOrder Accuracy: ");
-    reaction();
-    scanf("%d", &fourth);
-    printf("\n\t\t\t\tSpeed of Service: ");
-    reaction();
-    scanf("%d", &fifth);
-    printf("\n\t\t\t\tValue: ");
-    reaction();
-    scanf("%d", &sixth);
-    printf("\n\t\t\t\tOverall Experience: ");
-    reaction();
-    scanf("%d", &seventh);
-    char words[200];
-    printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
-    scanf("%s", &words);
-    printf("Great %s", words);
-    customer();
-}
+    newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = data;
+    newnode->price = price;
+    newnode->quantity = 0;
+    strcpy(newnode->foodname, foodname);
+    newnode->next = NULL;
+    newnode->prev = NULL;
+    struct node *temp = head;
+    if (temp == NULL)
+        heada = taila = newnode;
+    else
+    {
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newnode;
 
-void tableNumber()
+        newnode->prev = taila;
+        taila = newnode;
+    }
+    return heada;
+}
+struct node *createcustomer(struct node *head, int data, int quantity)
 {
-    int tableno;
-    printf("\t\t\t\t\t\t\tEnter your table no: ");
-    scanf("%d", &tableno);
-    printf("\t\t\t\t\t\t\tYour table no. is %d.\n\n", tableno);
+    newnode = (struct node *)malloc(sizeof(struct node));
+    struct node *temp1 = heada;
+    int flag = 0;
+    while (temp1 != NULL)
+    {
+        if (temp1->data == data)
+        {
+            flag = 1;
+            break;
+        }
+        temp1 = temp1->next;
+    }
+
+    if (flag == 1)
+    {
+        newnode->data = data;
+        newnode->price = quantity * (temp1->price);
+        newnode->quantity = quantity;
+        strcpy(newnode->foodname, temp1->foodname);
+        newnode->next = NULL;
+        newnode->prev = NULL;
+        struct node *temp = head;
+        if (temp == NULL)
+            headc = tailc = newnode;
+        else
+        {
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newnode;
+            newnode->prev = tailc;
+            tailc = newnode;
+        }
+    }
+    else
+    {
+        printf("\n\t\t\t\t\t\t\tThis item is not present in the menu!\n");
+    }
+    return headc;
+}
+void displayList(struct node *head)
+{
+    system("cls");
+    struct node *temp1 = head;
+    if (temp1 == NULL)
+    {
+        printf("\n\t\t\t\t\t\t\t\tList is empty.\n\n");
+    }
+    else
+    {
+        printf("\n");
+        while (temp1 != NULL)
+        {
+            if (temp1->quantity == 0)
+
+                printf("\t\t\t\t\t\t\t%d\t%s\t%0.2f\n", temp1->data, temp1->foodname, temp1->price);
+            else
+            {
+                printf("\t\t\t\t\t\t\t%d\t%s\t%d\t%0.2f\n", temp1->data, temp1->foodname, temp1->quantity, temp1->price);
+            }
+            temp1 = temp1->next;
+        }
+        printf("\n");
+    }
+}
+struct node *totalsales(int data, int quantity)
+{
+    newnode = (struct node *)malloc(sizeof(struct node));
+    int flag = 0;
+    struct node *temp1 = heada;
+    while (temp1->data != data)
+    {
+
+        temp1 = temp1->next;
+    }
+    newnode->data = data;
+    newnode->price = quantity * (temp1->price);
+    newnode->quantity = quantity;
+    strcpy(newnode->foodname, temp1->foodname);
+    newnode->next = NULL;
+    newnode->prev = NULL;
+    struct node *temp = head_s;
+    if (temp == NULL)
+        head_s = newnode;
+    else
+    {
+        while (temp->next != NULL)
+        {
+            if (temp->data == data)
+            {
+                flag = 1;
+                break;
+            }
+
+            temp = temp->next;
+        }
+        if (flag == 1)
+        {
+            temp->quantity += newnode->quantity;
+            temp->price += newnode->price;
+        }
+        else
+        {
+            temp->next = newnode;
+        }
+    }
+    return head_s;
+}
+void calculatetotsales()
+{
+    struct node *temp = headc;
+    while (temp != NULL)
+    {
+
+        head_s = totalsales(temp->data, temp->quantity);
+        temp = temp->next;
+    }
+}
+struct node *delete(int data, struct node *head, struct node *tail)
+{
+    if (head == NULL)
+    {
+        printf("\n\t\t\t\t\t\t\tList is empty\n");
+    }
+    else
+    {
+        struct node *temp;
+        if (data == head->data)
+        {
+            temp = head;
+            head = head->next;
+            if (head != NULL)
+                head->prev = NULL;
+            free(temp);
+        }
+        else if (data == tail->data)
+
+        {
+            temp = tail;
+            tail = tail->prev;
+            tail->next = NULL;
+            free(temp);
+        }
+        else
+        {
+            temp = head;
+            while (data != temp->data)
+            {
+                temp = temp->next;
+            }
+            (temp->prev)->next = temp->next;
+            (temp->next)->prev = temp->prev;
+            free(temp);
+        }
+    }
+    return head;
+}
+int deleteadmin()
+{
+
+    printf("\n\t\t\t\t\tEnter serial no. of the food item which is to be deleted: ");
+    int num;
+    scanf("%d", &num);
+    struct node *temp = heada;
+    while (temp != NULL)
+    {
+        if (temp->data == num)
+        {
+            heada = delete (num, heada, taila);
+            return 1;
+        }
+        temp = temp->next;
+    }
+    return 0;
+}
+int deletecustomer()
+{
+    printf("\n\t\t\t\t\tEnter serial no. of the food item which is to be deleted: ");
+    int num;
+    scanf("%d", &num);
+
+    struct node *temp = headc;
+    while (temp != NULL)
+    {
+        if (temp->data == num)
+        {
+            headc = delete (num, headc, tailc);
+            return 1;
+        }
+        temp = temp->next;
+    }
+    return 0;
+}
+void displaybill()
+{
+    displayList(headc);
+    struct node *temp = headc;
+    float total_price = 0;
+    while (temp != NULL)
+    {
+        total_price += temp->price;
+
+        temp = temp->next;
+    }
+    printf("\t\t\t\t\t\t\tTotal price: %0.02f\n", total_price);
+}
+struct node *deleteList(struct node *head)
+{
+    if (head == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        struct node *temp = head;
+        while (temp->next != 0)
+        {
+            temp = temp->next;
+            free(temp->prev);
+        }
+        free(temp);
+        head = NULL;
+    }
+    return head;
 }
 
 void admin()
 {
     timer();
     int choice;
+    int flag = 0, j = 1;
+    char ch;
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
     printf("\n\t\t\t\t\t                      ADMIN SECTION \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
@@ -276,7 +492,13 @@ void admin()
         else
         {
             authentication();
-            printf("\t\t\t\t\t\t\tView total sales.\n\n");
+            displayList(head_s);
+            // printf("\t\t\t\t\t\t\tView total sales.\n\n");
+            printf("\n\t\t\t\t\t\tPress any key to return to admin section:\n\t\t\t\t\t\t");
+            fflush(stdin);
+            ch = fgetc(stdin);
+            flag = 1;
+            admin();
         }
         break;
     case 4:
@@ -296,7 +518,7 @@ void waiter()
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
     printf("\n\t\t\t\t\t                      WAITER SECTION \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
-    printf("\t\t\t\t\t\t\t1. Display order menu. \n"); // this is to let admin know which items are in stock.
+    printf("\t\t\t\t\t\t\t1. Display ordered items. \n");
     printf("\t\t\t\t\t\t\t2. Add new items in the order. \n");
     printf("\t\t\t\t\t\t\t3. Remove items from the order. \n");
     printf("\t\t\t\t\t\t\t4. Go Back to Main Screen \n\n\n");
@@ -307,6 +529,7 @@ void waiter()
     {
     case 1:
         printf("Displaying the order.");
+        // Wait this for now this can be similar to view your ordered items of customer section.
         break;
     case 2:
         printf("Add new items in the order.");
@@ -324,6 +547,55 @@ void waiter()
     }
 }
 
+void reviews()
+{
+    screenclear();
+    int first, second, third, fourth, fifth, sixth, seventh;
+    printf("\n\n\t\t\t\tFood Quality: ");
+    reaction();
+    scanf("%d", &first);
+    printf("\n\t\t\t\tOverall Service Quality: ");
+    reaction();
+    scanf("%d", &second);
+    printf("\n\t\t\t\tCleanliness: ");
+    reaction();
+    scanf("%d", &third);
+    printf("\n\t\t\t\tOrder Accuracy: ");
+    reaction();
+    scanf("%d", &fourth);
+    printf("\n\t\t\t\tSpeed of Service: ");
+    reaction();
+    scanf("%d", &fifth);
+    printf("\n\t\t\t\tValue: ");
+    reaction();
+    scanf("%d", &sixth);
+    printf("\n\t\t\t\tOverall Experience: ");
+    reaction();
+    scanf("%d", &seventh);
+    char words[200];
+    printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
+    scanf("%s", &words);
+    customer();
+}
+
+void tableNumber()
+{
+    int tableno;
+    printf("\t\t\t\t\t\tEnter your table no: ");
+    scanf("%d", &tableno);
+    printf("\t\t\t\t\t\tYour table no. is %d.\n\n", tableno);
+}
+
+void pressEnter()
+{
+    printf("\n\t\t\t\t\t\tPress any key to return to customer section:\n\t\t\t\t\t\t");
+    int flag = 0, j = 1;
+    char ch;
+    fflush(stdin);
+    ch = fgetc(stdin);
+    flag = 1;
+}
+
 void customer()
 {
     screenclear();
@@ -332,8 +604,8 @@ void customer()
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n");
     printf("\n\t\t\t\t\t                   CUSTOMER SECTION \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
-    printf("\t\t\t\t\t\t\t1. Display order menu. \n"); // this is to let the customer know about menus
-    printf("\t\t\t\t\t\t\t2. Place your order. \n");
+    printf("\t\t\t\t\t\t\t1. Place your order. \n");
+    printf("\t\t\t\t\t\t\t2. Display your ordered items. \n");
     printf("\t\t\t\t\t\t\t3. Remove an item from the order. \n");
     printf("\t\t\t\t\t\t\t4. Display final bill. \n");
     printf("\t\t\t\t\t\t\t5. Reviews for improvement. \n");
@@ -344,28 +616,62 @@ void customer()
     switch (choice)
     {
     case 1:
-        printf("Displaying the order.");
+        // printf("Place your order.");
+        displayList(heada);
+        printf("\n\t\t\t\t\t\tEnter number corresponding to the item you want to order: ");
+        int n;
+        scanf("%d", &n);
+        printf("\t\t\t\t\t\tEnter quantity: ");
+        int quantity;
+        scanf("%d", &quantity);
+        headc = createcustomer(headc, n, quantity);
+        tableNumber();
+        printf("\t\t\t\t\t\t\t\tThank you for the order.\n\n");
+        pressEnter();
+        customer();
         break;
     case 2:
-        // printf("Place your order.");
-        tableNumber();
-        printf("\t\t\t\t\t\t\tThank you for the order.\n\n");
+        screenclear();
+        printf("\n\t\t\t\t\t\t\t Ordered items\n");
+        displayList(headc);
+        pressEnter();
+        customer();
         break;
     case 3:
-        printf("Remove an item from the order.");
+        screenclear();
+        if (deletecustomer())
+        {
+            system("cls");
+            printf("\n\t\t\t\t\t\t### Updated list of your ordered food items ###\n");
+            displayList(headc);
+            pressEnter();
+            customer();
+        }
+        else
+            printf("\n\t\t\t\t\t\tFood item with given serial number doesn't exist!!\n");
+        pressEnter();
+        customer();
         break;
     case 4:
-        printf("Display final bill.");
+        screenclear();
+        calculatetotsales();
+        printf("\n\t\t\t\t\t\t\t ### Final Bill ###\n");
+        displaybill();
+        headc = deleteList(headc);
+        pressEnter();
+        customer();
         break;
     case 5:
         // printf("Reviews for improvement.");
         reviews();
+        customer();
         break;
     case 6:
         mainscreen();
         break;
     default:
         printf("\t\t\t\t\t\t\tPlease enter a valid number.\n\n");
+        pressEnter();
         customer();
         break;
     }
@@ -382,7 +688,7 @@ void mainscreen()
     printf("\t\t\t\t\t\t\t1. ADMIN SECTION \n");
     printf("\t\t\t\t\t\t\t2. WAITER SECTION \n");
     printf("\t\t\t\t\t\t\t3. CUSTOMER SECTION \n");
-    printf("\t\t\t\t\t\t\t4. Exit \n\n\n");
+    printf("\t\t\t\t\t\t\t4. Exit \n\n\n"); // Uncomment below code or remove this option at production.
 
     printf("\t\t\t\t\t\"TAKE A TASTE. COME JOIN US, LIFE IS SO ENDLESSLY DELICIOUS.\"\n\n\n");
     printf("\t\t\t\t\t      Created and Designed by Uttam and Pratik\n\n\n");
@@ -392,6 +698,17 @@ void mainscreen()
     if (choice == 4)
     {
         printf("\t\t\t\t\t\t\t Thank you for checking us.\n\n\n\n");
+        int i;
+        for (i = 5; i > 0; i--)
+        {
+            // delay of one second
+            delay(1);
+            screenclear();
+            printf("\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tBack to main menu in %d sec.", i);
+        }
+        printf("\n\n\n\n\n");
+        // screenclear(); // Uncomment this during production
+        // mainscreen();
     }
     switch (choice)
     {
@@ -407,6 +724,7 @@ void mainscreen()
         break;
     case 4:
         break;
+
     default:
         screenclear();
         printf("\t\t\t\t\t\t\tPlease enter a valid number 1, 2 or 3.\n\n");
@@ -416,10 +734,27 @@ void mainscreen()
 }
 
 int main()
+
 {
+    heada = createadmin(heada, 1, "EGG BURGER", 300);
+    heada = createadmin(heada, 2, "BEEF BURGER", 500);
+    heada = createadmin(heada, 3, "CHEESE BURGER", 600);
+    heada = createadmin(heada, 4, "CREAMY MUSHROOM", 700);
+    heada = createadmin(heada, 5, "SPICY CHICKEN", 600);
+    heada = createadmin(heada, 6, "BARBEQUE BURGER", 900);
+    heada = createadmin(heada, 7, "HAWAIIAN BURGER", 1200);
+    heada = createadmin(heada, 8, "FRENCH FRIES", 400);
+    heada = createadmin(heada, 9, "NUGGET\t", 400);
+    heada = createadmin(heada, 10, "SAUSAGE\t", 400);
+    heada = createadmin(heada, 11, "CHICKEN WINGS", 700);
+    heada = createadmin(heada, 12, "MELON ICECREAM", 400);
+    heada = createadmin(heada, 13, "APPLE DESSERT", 400);
+    heada = createadmin(heada, 14, "RED VELVET CAKE", 400);
+    heada = createadmin(heada, 15, "BEEF\t", 200);
+    heada = createadmin(heada, 16, "MUSHROOM", 200);
+    heada = createadmin(heada, 17, "EGG\t", 200);
+    heada = createadmin(heada, 18, "LEMONADE", 300);
+    heada = createadmin(heada, 19, "SOFT DRINK", 500);
+    heada = createadmin(heada, 20, "MILK SHAKE", 700);
     mainscreen();
-    // authentication();
-    // admin();
-    // customer();
-    return 0;
 }

@@ -7,6 +7,7 @@ void mainscreen();
 void customer();
 void alreadySetLoginDetails();
 int i, stringlength;
+void pressEnter();
 char user[10], pass[10];
 void screenclear()
 {
@@ -519,8 +520,8 @@ void waiter()
     printf("\n\t\t\t\t\t                      WAITER SECTION \n");
     printf("\n\t\t\t\t\t---------------------------------------------------------- \n\n");
     printf("\t\t\t\t\t\t\t1. Display ordered items. \n");
-    printf("\t\t\t\t\t\t\t2. Add new items in the order. \n");
-    printf("\t\t\t\t\t\t\t3. Remove items from the order. \n");
+    printf("\t\t\t\t\t\t\t2. Add new items in the menu. \n");
+    printf("\t\t\t\t\t\t\t3. Remove items from the menu. \n");
     printf("\t\t\t\t\t\t\t4. Go Back to Main Screen \n\n\n");
     printf("\t\t\t\t\t\t\tEnter Your Preference : ");
     scanf("%d", &choice);
@@ -528,21 +529,65 @@ void waiter()
     switch (choice)
     {
     case 1:
-        printf("Displaying the order.");
-        // Wait this for now this can be similar to view your ordered items of customer section.
+        screenclear();
+        printf("\n\t\t\t\t\t\t\t Ordered items\n");
+        displayList(headc);
+        pressEnter();
+        waiter();
         break;
     case 2:
-        printf("Add new items in the order.");
+        screenclear();
+        printf("\n\t\t\t\t\t\t\tEnter serial no. of the food item: ");
+        int num, flag = 0;
+        char name[50];
+        float price;
+        scanf("%d", &num);
+
+        struct node *temp = heada;
+        while (temp != NULL)
+        {
+            if (temp->data == num)
+            {
+                printf("\n\t\t\t\t\t\tFood item with given serial number already exists.\n\n");
+                flag = 1;
+                pressEnter();
+                waiter();
+                break;
+            }
+            screenclear();
+            temp = temp->next;
+        }
+        if (flag == 1)
+            break;
+        printf("\t\t\t\t\t\t\tEnter food item name: ");
+        scanf("%s", name);
+        printf("\t\t\t\t\t\t\tEnter price: ");
+        scanf("%f", &price);
+        heada = createadmin(heada, num, name, price);
+        printf("\n\t\t\t\t\t\t\tNew food item added to the list.\n\n");
+        pressEnter();
+        waiter();
         break;
     case 3:
-        printf("Remove items from the order.");
+        screenclear();
+        if (deleteadmin())
+        {
+            printf("\n\t\t\t\t\t\t Updated list of food items menu \n");
+            displayList(heada);
+            pressEnter();
+            waiter();
+        }
+        else
+            printf("\n\t\t\t\t\t\tFood item with given serial number doesn't exist.\n\n");
+        pressEnter();
+        waiter();
         break;
     case 4:
         mainscreen();
         break;
     default:
         printf("\t\t\t\t\t\t\tPlease enter a valid number.\n\n");
-        admin();
+        waiter();
         break;
     }
 }
@@ -578,17 +623,9 @@ void reviews()
     customer();
 }
 
-void tableNumber()
-{
-    int tableno;
-    printf("\t\t\t\t\t\tEnter your table no: ");
-    scanf("%d", &tableno);
-    printf("\t\t\t\t\t\tYour table no. is %d.\n\n", tableno);
-}
-
 void pressEnter()
 {
-    printf("\n\t\t\t\t\t\tPress any key to return to customer section:\n\t\t\t\t\t\t");
+    printf("\n\t\t\t\t\t\tPress any key to return to your section:\n\t\t\t\t\t\t");
     int flag = 0, j = 1;
     char ch;
     fflush(stdin);
@@ -625,7 +662,6 @@ void customer()
         int quantity;
         scanf("%d", &quantity);
         headc = createcustomer(headc, n, quantity);
-        tableNumber();
         printf("\t\t\t\t\t\t\t\tThank you for the order.\n\n");
         pressEnter();
         customer();
@@ -642,20 +678,20 @@ void customer()
         if (deletecustomer())
         {
             system("cls");
-            printf("\n\t\t\t\t\t\t### Updated list of your ordered food items ###\n");
+            printf("\n\t\t\t\t\t\t Updated list of your ordered food items \n");
             displayList(headc);
             pressEnter();
             customer();
         }
         else
-            printf("\n\t\t\t\t\t\tFood item with given serial number doesn't exist!!\n");
+            printf("\n\t\t\t\t\t\tFood item with given serial number doesn't exist.\n");
         pressEnter();
         customer();
         break;
     case 4:
         screenclear();
         calculatetotsales();
-        printf("\n\t\t\t\t\t\t\t ### Final Bill ###\n");
+        printf("\n\t\t\t\t\t\t\t  Final Bill \n");
         displaybill();
         headc = deleteList(headc);
         pressEnter();

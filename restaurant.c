@@ -5,8 +5,11 @@
 #include <direct.h>
 void mainscreen();
 void customer();
+void customerReviews();
 void alreadySetLoginDetails();
 int i, stringlength;
+int first, second, third, fourth, fifth, sixth, seventh;
+char words[200];
 void pressEnter();
 char user[10], pass[10];
 void screenclear()
@@ -452,7 +455,8 @@ void admin()
     printf("\t\t\t\t\t\t\t1. Set username and password. \n"); // this is to let admin know which items are in stock.
     printf("\t\t\t\t\t\t\t2. Forgot password? \n");
     printf("\t\t\t\t\t\t\t3. View total sales. \n");
-    printf("\t\t\t\t\t\t\t4. Go Back to Main Screen \n\n\n");
+    printf("\t\t\t\t\t\t\t4. Reviews \n");
+    printf("\t\t\t\t\t\t\t5. Go Back to Main Screen \n\n\n");
     printf("\t\t\t\t\t\t\tEnter Your Preference : ");
     scanf("%d", &choice);
     printf("\n\n");
@@ -503,6 +507,9 @@ void admin()
         }
         break;
     case 4:
+        customerReviews();
+        break;
+    case 5:
         mainscreen();
         break;
     default:
@@ -591,11 +598,20 @@ void waiter()
         break;
     }
 }
+void pressEnter()
+{
+    printf("\n\t\t\t\t\t\tPress any key to return to your section:\n\t\t\t\t\t\t");
+    int flag = 0, j = 1;
+    char ch;
+    fflush(stdin);
+    ch = fgetc(stdin);
+    flag = 1;
+}
 
 void reviews()
 {
     screenclear();
-    int first, second, third, fourth, fifth, sixth, seventh;
+
     printf("\n\n\t\t\t\tFood Quality: ");
     reaction();
     scanf("%d", &first);
@@ -617,20 +633,32 @@ void reviews()
     printf("\n\t\t\t\tOverall Experience: ");
     reaction();
     scanf("%d", &seventh);
-    char words[200];
     printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
-    scanf("%s", &words);
+    scanf("%s[^\n]", &words);
     customer();
 }
 
-void pressEnter()
+void customerReviews()
 {
-    printf("\n\t\t\t\t\t\tPress any key to return to your section:\n\t\t\t\t\t\t");
-    int flag = 0, j = 1;
-    char ch;
-    fflush(stdin);
-    ch = fgetc(stdin);
-    flag = 1;
+    if (first == 0)
+    {
+        printf("\n\t\t\t\t\t\t\t No Reviews yet!");
+        pressEnter();
+        admin();
+    }
+    else
+    {
+        printf("\n\t\t\t\t\t Customer Reviews: \n\n");
+        printf("\t\t\t\t\t Food Quality: %d", first);
+        printf("\n\t\t\t\t\t Overall Service Quality: %d", second);
+        printf("\n\t\t\t\t\t Cleanliness: %d", third);
+        printf("\n\t\t\t\t\t Order Accuracy: %d", fourth);
+        printf("\n\t\t\t\t\t Speed of Service: %d", fifth);
+        printf("\n\t\t\t\t\t Value: %d", sixth);
+        printf("\n\t\t\t\t\t Overall Experience: %d", seventh);
+        printf("\n\t\t\t\t\t Suggestions and questions: %s\n\n", words);
+        pressEnter();
+    }
 }
 
 void customer()

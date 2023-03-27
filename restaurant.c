@@ -507,7 +507,21 @@ void admin()
         }
         break;
     case 4:
-        customerReviews();
+        stringlength = strlen(user);
+        if (stringlength == 0)
+        {
+            screenclear();
+            printf("\t\t\t\t\t\t\tPlease first add username and password.\n\n");
+            username_prompt();
+            ask_prompt();
+            admin();
+        }
+        else
+        {
+            authentication();
+            customerReviews();
+            admin();
+        }
         break;
     case 5:
         mainscreen();

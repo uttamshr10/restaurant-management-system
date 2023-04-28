@@ -50,7 +50,7 @@ void username_prompt() // Please note that first, call username_prompt then ask_
 {
     char username[10];
     printf("\n\t\t\t\t\t\t\tPlease enter admin username: ");
-    scanf("%s", &user);
+    scanf("%s", user);
     printf("\n\t\t\t\t\t\t\tYour username is %s.\n", user);
 }
 
@@ -58,9 +58,9 @@ void password_prompt()
 {
     char re_entered[10];
     printf("\n\t\t\t\t\t\t\tPlease enter admin password: ");
-    scanf("%s", &pass);
+    scanf("%s", pass);
     printf("\n\t\t\t\t\t\t\tPlease re-enter your password for verification: ");
-    scanf("%s", &re_entered);
+    scanf("%s", re_entered);
     if (strcmp(pass, re_entered) == 0)
     {
         printf("\n\t\t\t\t\t\t\tYour password is %s.\n", pass);
@@ -78,7 +78,7 @@ void ask_prompt()
     char character[4];
     printf("\n\t\t\t\tAre you sure you want to proceed?\n");
     printf("\n\t\t\t\tType 'YES' or 'yes' to proceed and 'NO' or 'no' to add new one : ");
-    scanf("%s", &character);
+    scanf("%s", character);
     if (strcmp(character, "yes") == 0 || strcmp(character, "YES") == 0)
     {
         screenclear();
@@ -97,17 +97,17 @@ void authentication()
     char username[10];
     char password[10];
     printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-    scanf("%s", &username);
+    scanf("%s", username);
     while (strcmp(username, user) != 0)
     {
         screenclear();
         printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-        scanf("%s", &username);
+        scanf("%s", username);
     }
     if (strcmp(username, user) == 0)
     {
         printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");
-        scanf("%s", &password);
+        scanf("%s", password);
     }
 
     while (strcmp(password, pass) != 0)
@@ -115,7 +115,7 @@ void authentication()
         printf("\n\n\t\t\t\t**\t\t\t Please enter the correct credentials.\t\t\t**\n\n\n"); // Just two new line
         // authentication();
         printf("\n\n\t\t\t\t||\t\t\t Enter your password:\t\t\t||\n\n\t\t\t\t\t\t\t -> Password:\t");
-        scanf("%s", &password);
+        scanf("%s", password);
     }
     if (strcmp(password, pass) == 0)
     {
@@ -159,13 +159,13 @@ void alreadySetLoginDetails()
 {
     char username[10];
     printf("\n\n\t\t\t\t||\t\t\t Enter your username for verification:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-    scanf("%s", &username);
+    scanf("%s", username);
     if (strcmp(username, user) != 0)
     {
         screenclear();
         printf("\n\n\t\t\t\t\t\t\tIncorrect username, Please enter again \n\n");
         printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-        scanf("%s", &username);
+        scanf("%s", username);
         // there's a meme it's not a bug, it's a feature works here. haha
     }
     else if (strcmp(username, user) == 0)
@@ -178,13 +178,13 @@ void alreadySetLoginwithDetails()
 {
     char username[10];
     printf("\n\n\t\t\t\t||\t\t\t Enter your username for verification:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-    scanf("%s", &username);
+    scanf("%s", username);
     if (strcmp(username, user) != 0)
     {
         screenclear();
         printf("\n\n\t\t\t\t\t\t\tIncorrect username, Please enter again \n\n");
         printf("\n\n\t\t\t\t||\t\t\t Enter your username:\t\t\t||\n\n\t\t\t\t\t\t\t -> Username:\t");
-        scanf("%s", &username);
+        scanf("%s", username);
     }
     else if (strcmp(username, user) == 0)
     {
@@ -648,7 +648,7 @@ void reviews()
     reaction();
     scanf("%d", &seventh);
     printf("\n\t\t\t\tAny comments, questions or suggestions?\n");
-    scanf("%s[^\n]", &words);
+    scanf("%s[^\n]", words);
     customer();
 }
 
@@ -785,8 +785,8 @@ void mainscreen()
             printf("\n\n\n\n\n\n\n\n\t\t\t\t\t\t\tBack to main menu in %d sec.", i);
         }
         printf("\n\n\n\n\n");
-        // screenclear(); // Uncomment this during production
-        // mainscreen();
+        screenclear();
+        // mainscreen(); // Uncomment this during production
     }
     switch (choice)
     {

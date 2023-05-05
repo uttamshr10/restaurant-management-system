@@ -25,8 +25,20 @@ Upon running the `./a.exe` executable, you will be presented with a mainscreen t
 3. CUSTOMER SECTION
 4. Exit
 
+             MainScreen
 ![Alt text](/images/mainscreen.png)
 
+        Admin Section
+![Alt text](/images/admin.png)
+
+        Waiter Section
+![Alt text](/images/waiter.png)
+
+        Customer Section
+![Alt text](/images/customer.png)
+
+        Exit
+![Alt text](/images/exit.png)
 
 Selecting an option will take you to the corresponding operation. You can navigate back to the main menu at any time by selecting last option of each section.
 
@@ -43,10 +55,10 @@ Selecting an option will take you to the corresponding operation. You can naviga
 
 
 
-## Contributing
+# Contributing
 
 Contributions are welcome! If you find any bugs or have any suggestions for improvements, please create an issue or a pull request.
 
-## Contact
+# Contact
 
 If you have any questions or feedback, feel free to contact us at utam.shrestha65@gmail.com or pratiksijapati576@gmail.com

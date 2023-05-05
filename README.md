@@ -12,7 +12,7 @@ RMS was fully built with C programming. The sole purpose of this project is to f
 ```
 git@github.com:uttamshr10/restaurant-management-system.git
 ```
-2. Navigate to project `cd directory restaurant-management-system`
+2. Navigate to project `cd restaurant-management-system`
 3. Compile the `restaurant.c` file using a C compiler of your choice.
 4. Run the compiled `./a.exe` executable.
 

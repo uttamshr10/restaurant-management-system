@@ -259,7 +259,7 @@ struct node *createcustomer(struct node *head, int data, int quantity)
 }
 void displayList(struct node *head)
 {
-    system("cls");
+    screenclear();
     struct node *temp1 = head;
     if (temp1 == NULL)
     {
@@ -719,7 +719,7 @@ void customer()
         screenclear();
         if (deletecustomer())
         {
-            system("cls");
+            screenclear();
             printf("\n\t\t\t\t\t\t Updated list of your ordered food items \n");
             displayList(headc);
             pressEnter();

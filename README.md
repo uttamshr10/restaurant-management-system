@@ -32,13 +32,13 @@ Selecting an option will take you to the corresponding operation. You can naviga
 
 # Authors
 ## Uttam Shrestha
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white&link={"https://www.linkedin.com/in/uttam-shrestha-b96032224/"})]({"https://www.linkedin.com/in/uttam-shrestha-b96032224/"})
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/uttam-shrestha-b96032224/)
  
 [![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/uttamshr10)
 
 
 ## Pratik Sijapati
- [![Facebook](https://img.shields.io/badge/-Facebook-blue?style=flat-square&logo=facebook&logoColor=white&link={"https://www.facebook.com/pravash.khadka.739"})]({"https://www.facebook.com/pravash.khadka.739"})
+ [![Facebook](https://img.shields.io/badge/-Facebook-blue?style=flat-square&logo=facebook&logoColor=white)](https://www.facebook.com/pravash.khadka.739)
 
 
 
